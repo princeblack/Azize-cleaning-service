@@ -1,5 +1,5 @@
 import { Phone, Mail, MapPin, Facebook, Instagram, Twitter } from "lucide-react";
-
+import logo from "@/assets/logo.png";
 const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground">
@@ -9,10 +9,10 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <img 
-                src="/lovable-uploads/372c0fa3-d2fc-4b52-9782-b0e4bc3fb74b.png" 
-                alt="Azize Sankande Logo" 
-                className="h-12 w-12 brightness-0 invert"
-              />
+              src={logo} 
+              alt="Azize Sankande Logo" 
+              className="h-16 w-16 object-cover rounded-full shadow-lg"
+            />
               <div>
                 <h3 className="text-xl font-bold">Azize Sankande</h3>
                 <p className="text-sm opacity-90">Reinigungsservice</p>
@@ -54,36 +54,25 @@ const Footer = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4" />
-                <span>+49 123 456 789</span>
+                <span>+49 159 026 650 04</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4" />
-                <span>info@azize-sankande.de</span>
+                <span>kontakt@azizesankande.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-4 w-4" />
-                <span>Musterstraße 123<br />12345 Musterstadt</span>
+                <span>Hofackerzeile 2<br />13627 Berlin</span>
               </div>
             </div>
 
-            {/* Social Media */}
-            <div className="flex space-x-4 pt-4">
-              <a href="#" className="hover:opacity-80 transition-opacity">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="hover:opacity-80 transition-opacity">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" className="hover:opacity-80 transition-opacity">
-                <Twitter className="h-5 w-5" />
-              </a>
-            </div>
+
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-sm opacity-90">
-          <p>&copy; 2024 Azize Sankande Reinigungsservice. Alle Rechte vorbehalten.</p>
+          <p>&copy; 2025 Azize Sankande Reinigungsservice. Alle Rechte vorbehalten.</p>
         </div>
       </div>
     </footer>

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Menu, Phone, Mail } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Header = () => {
   return (
@@ -9,9 +10,9 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/372c0fa3-d2fc-4b52-9782-b0e4bc3fb74b.png" 
+              src={logo} 
               alt="Azize Sankande Logo" 
-              className="h-12 w-12"
+              className="h-14 w-14 object-cover rounded-full"
             />
             <div>
               <h1 className="text-xl font-bold text-primary">Azize Sankande</h1>
@@ -31,7 +32,7 @@ const Header = () => {
           <div className="hidden lg:flex items-center space-x-4">
             <div className="flex items-center space-x-2 text-sm">
               <Phone className="h-4 w-4 text-primary" />
-              <span>+49 123 456 789</span>
+              <span>+49 159 026 650 04</span>
             </div>
             <Button variant="hero" size="sm">
               Kostenlos anfragen

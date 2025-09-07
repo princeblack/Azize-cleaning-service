@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Star } from "lucide-react";
-import heroImage from "@/assets/hero-cleaning.jpg";
+import heroImage from "@/assets/azize-sankande.png";
 
 const Hero = () => {
   return (
@@ -64,7 +64,9 @@ const Hero = () => {
               <img 
                 src={heroImage} 
                 alt="Professionelle Reinigungskraft" 
-                className="w-full h-[600px] object-cover"
+                className=" h-[700px]
+                 object-cover bg-center
+                 ease-in-out"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>

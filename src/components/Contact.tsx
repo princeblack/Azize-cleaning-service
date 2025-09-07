@@ -3,26 +3,71 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { useState } from "react";
+import { sendContactEmail } from "@/lib/emailService";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    service: "Haushaltsreinigung",
+    message: ""
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    const result = await sendContactEmail(formData);
+    
+    if (result.success) {
+      setSubmitStatus('success');
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        service: "Haushaltsreinigung",
+        message: ""
+      });
+    } else {
+      setSubmitStatus('error');
+    }
+    
+    setIsSubmitting(false);
+  };
   const contactInfo = [
     {
       icon: Phone,
       title: "Telefon",
-      info: "+49 123 456 789",
+      info: "+49 159 026 650 04",
       subInfo: "Mo-Fr 8:00-18:00"
     },
     {
       icon: Mail,
       title: "E-Mail",
-      info: "info@azize-sankande.de",
+      info: "kontakt@azizesankande.com",
       subInfo: "24/7 Antwort"
     },
     {
       icon: MapPin,
       title: "Standort",
-      info: "Musterstraße 123",
-      subInfo: "12345 Musterstadt"
+      info: "Hofackerzeile 2",
+      subInfo: "13627 Berlin Deutschland"
     },
     {
       icon: Clock,
@@ -72,49 +117,105 @@ const Contact = () => {
                 <CardTitle className="text-2xl">Kostenloses Angebot anfordern</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-md">
+                    <p className="text-green-800 text-sm font-medium">Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-md">
+                    <p className="text-red-800 text-sm font-medium">Es gab ein Problem beim Senden Ihrer Nachricht. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.</p>
+                  </div>
+                )}
+                
+                <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground">Vorname</label>
-                    <Input placeholder="Ihr Vorname" />
+                    <Input 
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      placeholder="Ihr Vorname"
+                      required
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground">Nachname</label>
-                    <Input placeholder="Ihr Nachname" />
+                    <Input 
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      placeholder="Ihr Nachname"
+                      required
+                    />
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground">E-Mail</label>
-                    <Input type="email" placeholder="ihre.email@example.com" />
+                    <Input 
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="ihre.email@example.com"
+                      required
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground">Telefon</label>
-                    <Input type="tel" placeholder="+49 123 456 789" />
+                    <Input 
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="+49 159 026 650 04"
+                    />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">Service benötigt</label>
-                  <select className="w-full h-10 px-3 rounded-md border border-input bg-background text-foreground">
-                    <option>Haushaltsreinigung</option>
-                    <option>Büroreinigung</option>
-                    <option>Tiefenreinigung</option>
-                    <option>Sonstige</option>
+                  <select 
+                    name="service"
+                    value={formData.service}
+                    onChange={handleInputChange}
+                    className="w-full h-10 px-3 rounded-md border border-input bg-background text-foreground"
+                  >
+                    <option value="Büroreinigung">Büroreinigung</option>
+                    <option value="Grundreinigun">Grundreinigun</option>
+                    <option value="Tiefenreinigung">Tiefenreinigung</option>
+                    <option value="Haushaltsreinigung">Haushaltsreinigung</option>
+                    <option value="Treppen Reinigung">Treppen Reinigung</option>
+                    <option value="Sonstige">Sonstige</option>
                   </select>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">Nachricht</label>
                   <Textarea 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     placeholder="Beschreiben Sie Ihre Reinigungsanforderungen..."
                     className="min-h-[120px]"
+                    required
                   />
                 </div>
 
-                <Button variant="hero" size="lg" className="w-full">
-                  Kostenlos anfragen
+                <Button 
+                  type="submit" 
+                  variant="hero" 
+                  size="lg" 
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Wird gesendet...' : 'Kostenlos anfragen'}
                 </Button>
+                </form>
 
                 <p className="text-sm text-muted-foreground text-center">
                   Wir antworten innerhalb von 24 Stunden und respektieren Ihre Privatsphäre.
