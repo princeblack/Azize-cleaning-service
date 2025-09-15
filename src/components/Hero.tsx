@@ -60,7 +60,15 @@ const Hero = () => {
               >
                 Kostenlos anfragen
               </Button>
-              <Button variant="outline" size="lg" className="text-base">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="text-base"
+                onClick={() => {
+                  const servicesSection = document.getElementById('services');
+                  servicesSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Unsere Leistungen
               </Button>
             </div>
