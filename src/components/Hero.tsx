@@ -49,7 +49,15 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="hero" size="lg" className="text-base">
+              <Button 
+                variant="hero" 
+                size="lg" 
+                className="text-base"
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  contactSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Kostenlos anfragen
               </Button>
               <Button variant="outline" size="lg" className="text-base">

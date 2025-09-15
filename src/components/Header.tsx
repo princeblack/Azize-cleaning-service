@@ -34,7 +34,14 @@ const Header = () => {
               <Phone className="h-4 w-4 text-primary" />
               <span>+49 159 026 650 04</span>
             </div>
-            <Button variant="hero" size="sm">
+            <Button 
+              variant="hero" 
+              size="sm"
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                contactSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               Kostenlos anfragen
             </Button>
           </div>
